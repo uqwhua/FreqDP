@@ -11,7 +11,7 @@ ICDE 2022, Paper 916 submission
 ### Project structure
 
     CMakeLists.txt                                -- the version of cmake might be revised accordingly (currently is 3.15)
-    cmake-build/                            -- If needed, clean some files, then re-compile and re-build in your device
+    cmake-build/                                  -- If needed, clean some files, then re-compile and re-build in your device
         config.properties                         -- the program will read parameters here
         Testing/                                  -- all testing data and some possbile outputs
           RoadNetworkInfo/NNid2lnglat.csv         -- the road network information used for simple map-matching as the preprosseing of data
@@ -27,7 +27,7 @@ ICDE 2022, Paper 916 submission
     privacy/                                      -- all privacy models and relevant structures defined here (including hierarachical grid)
         local/                                    -- local mechanism implemented here
         global/                                   -- global mechanism implemented here
-    ...                                           -- other paticipant classes and headers
+    ...                                           -- other paticipant classes and headers (not detailed here)
 
 ### Anonymization
 
