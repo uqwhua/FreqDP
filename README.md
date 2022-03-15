@@ -6,8 +6,6 @@ ICDE 2022, Paper 916 submission
     - The global and local mechanisms can be performed individually or composed with different ordering, which can be specified in the parameter file (detailed later).
 - To support large-scale data, an efficient hierarchical grid index is provided along with the bottom-up-down search strategy.
 
-!!! Tested with CentOS Linux (with gcc version 9.2.0) and macOS Monterey (Apple clang version 13.0.0) 
-
 ### Project structure
 
     CMakeLists.txt                                -- the version of cmake might be revised accordingly (currently is 3.15)
@@ -47,19 +45,22 @@ Datasets should be located in the `cmake-build/Testing/TestData-tdrive/` folder.
 
 The test configuration is in `cmake-build/config.properties`. 
 
+### Environment
+Tested with CentOS Linux (with gcc version 9.2.0) and macOS Monterey (Apple clang version 13.0.0) 
+
 ### Input Parameters (an example)
 
     RoadNetworkFile = ./Testing/RoadNetworkInfo/NNid2lnglat.csv         -- fixed, used for the simple map-matching initially
     data_FolderInput = ./Testing/TestData-tdrive/                       -- the input data to be protected
     data_FolderOutput = ./Testing/outputs/                              -- the output folder, any log file or anonymized trajectries will be here
 
-    data_total = 100                                                    -- how many trajectories to be protected (e.g., 100, 500, etc)
+    data_total = 100                                                    -- how many objects to be protected (e.g., 100, 500, etc)
     output_results = false                                              -- whether the anonymized data will be outputted
     linking_reduction = 10                                              -- for signature reduction, i.e., the number of signature points for each trajectory
     privacy_epsilon = 0.5,2.0                                           -- privacy budget for differential privacy; allow multiple choices here
     edit_global = true                                                  -- pureGlobal
     edit_local  = true                                                  -- pureLocal
-    global_local_composition_order = GLLG                               -- GL: Global->Local;   LG: Local->Global;  allow both
+    global_local_composition_order = GLLG                               -- GL: Global->Local;   LG: Local->Global; exchangable composition
 
 If you encounter any issue during executing this program, please feel free to contact fengmei.jin@uq.edu.au .
 
