@@ -20,49 +20,54 @@ class PerturbDistribution {
     }
 
 public:
-    // for global frequency perturbation
+    // for frequency perturbation
     static void perturbFrequency(const map<string, FrequencyVec *>& freqVec_ori, const map<string, vector<int>>& targetSigPoints,
                                  int cutoff, float epsilon, map<string, FrequencyVec *> &freqVec_pert){
         for (const auto& fpair: freqVec_ori) {
             string userID = fpair.first;
             FrequencyVec* freq_ori = fpair.second;
-            const vector<int>& targetPoints = targetSigPoints.at(userID);
-            unsigned int pointNum = targetPoints.size();
+            auto itr = targetSigPoints.find(userID);
+            if(itr != targetSigPoints.end()) {
+                vector<int> targetPoints = itr->second;
 
-            auto *freq_pert = new FrequencyVec(freq_ori);
+                unsigned int pointNum = targetPoints.size();
 
-            // Stage-1: top1 - topM
-            float noiseLowerBound = INFINITY;
-            float avgAddedNoise1 = 0;
-            int i;
-            for (i = 0; i < cutoff && i < pointNum; i++) {
-                int pid = targetPoints.at(i);
-                int freqValue_ori = freq_ori->getValueByKey(pid);
-                float noise = NoiseGenerator::fromLaplaceDistribution(epsilon, 1, (float) freqValue_ori * -1);     // currently, fixed
+                auto *freq_pert = new FrequencyVec(freq_ori);
 
-                int freqValue_pert = postProcessing(freqValue_ori, noise);
-                freq_pert->updateValue(pid, freqValue_pert);
+                // Stage-1: top1 - topM
+                float noiseLowerBound = INFINITY;
+                float avgAddedNoise1 = 0;
+                int i;
+                for (i = 0; i < cutoff && i < pointNum; i++) {
+                    int pid = targetPoints.at(i);
+                    int freqValue_ori = freq_ori->getValueByKey(pid);
+                    float noise = NoiseGenerator::fromLaplaceDistribution(epsilon, 1, -1.0f * (float) freqValue_ori);     // currently, fixed
 
-                auto addedNoise = (float) (freqValue_pert - freqValue_ori);
-                avgAddedNoise1 += addedNoise;
+                    int freqValue_pert = postProcessing(freqValue_ori, noise);
+                    freq_pert->updateValue(pid, freqValue_pert);
 
-                noiseLowerBound = MIN(noiseLowerBound, addedNoise);     // should be a negative value
+                    float addedNoise = (float) freqValue_pert - (float) freqValue_ori;
+                    avgAddedNoise1 += addedNoise;
+
+                    noiseLowerBound = MIN(noiseLowerBound, addedNoise);     // should be a negative value
+                }
+
+                avgAddedNoise1 /= (float) i;
+
+                // Stage-2: top-(M+1) - top-2M
+                float noiseUpperBound = abs(noiseLowerBound);
+                for (i = cutoff; i < pointNum; i++) {
+                    int pid = targetPoints.at(i);
+                    int freqValue_ori = freq_ori->getValueByKey(pid);
+                    float noise = NoiseGenerator::fromLaplaceDistribution(epsilon, 1, -1 * avgAddedNoise1);
+
+                    noise = MIN(noise, noiseUpperBound);
+                    int freqValue_pert = postProcessing(freqValue_ori, noise);
+                    freq_pert->updateValue(pid, freqValue_pert);
+                }
+
+                freqVec_pert[userID] = freq_pert;
             }
-
-            avgAddedNoise1 /= (float) i;
-
-            // Stage-2: top-(M+1) - top-2M
-            float noiseUpperBound = abs(noiseLowerBound);
-            for (i = cutoff; i < pointNum; i++) {
-                int pid = targetPoints.at(i);
-                int freqValue_ori = freq_ori->getValueByKey(pid);
-                float noise = NoiseGenerator::fromLaplaceDistribution(epsilon, 1, -1 * avgAddedNoise1);
-
-                noise = MIN(noise, noiseUpperBound);
-                int freqValue_pert = postProcessing(freqValue_ori, noise);
-                freq_pert->updateValue(pid, freqValue_pert);
-            }
-            freqVec_pert[userID] = freq_pert;
         }
     }
 

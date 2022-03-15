@@ -18,12 +18,14 @@ public:
     // insert the target point between aheadP and nextP
     // or delete the target point from aheadP and nextP
     static float computeUtilityLossForPoint(StaticGrid *grid, int targetPointID, Point *aheadP, Point *nextP) {
-        float cost = 0;
-        if (aheadP == nullptr && nextP == nullptr) {
-            cost = -1;  // invalid
-        }
-        else if (aheadP == nullptr || aheadP->isHeadPtr()) {
-            cost = grid->getPairwiseDist(targetPointID, nextP->getPointId());
+        float cost;
+        if (aheadP == nullptr || aheadP->isHeadPtr()) {
+            if(nextP == nullptr || nextP->isTailPtr()) {
+                cost = -1;            // invalid, should not happen, unless this trip has only one point
+            }
+            else {
+                cost = grid->getPairwiseDist(targetPointID, nextP->getPointId());
+            }
         }
         else if (nextP == nullptr || nextP->isTailPtr()) {
             cost = grid->getPairwiseDist(targetPointID, aheadP->getPointId());
