@@ -1,10 +1,9 @@
-ICDE 2022, Paper 916 submission
 ## Frequency-based Randomization for Guaranteeing Differential Privacy in Spatial Trajectories
-#### Authors: Fengmei Jin, Wen Hua, Boyu Ruan, Xiaofang Zhou
+#### Authors: Fengmei Jin, Wen Hua, Boyu Ruan, and Xiaofang Zhou
 
-- A novel differential privacy model for trajectory anonymization
-    - The global and local mechanisms can be performed individually or composed with different ordering, which can be specified in the parameter file (detailed later).
-- To support large-scale data, an efficient hierarchical grid index is provided along with the bottom-up-down search strategy.
+A novel frequency-based differential privacy model for trajectory anonymization
+- The global and local mechanisms can be performed individually or composed with different ordering, which can be specified in the parameter file (detailed later).
+An efficient hierarchical grid index is provided along with the bottom-up-down search strategy to support large-scale data.
 
 ### Project structure
 
