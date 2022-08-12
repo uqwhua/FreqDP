@@ -1,11 +1,12 @@
 ## Frequency-based Randomization for Guaranteeing Differential Privacy in Spatial Trajectories
 #### Authors: Fengmei Jin, Wen Hua, Boyu Ruan, and Xiaofang Zhou
 
-A novel frequency-based differential privacy model for trajectory anonymization
-- The global and local mechanisms can be performed individually or composed with different ordering, which can be specified in the parameter file (detailed later).
-An efficient hierarchical grid index is provided along with the bottom-up-down search strategy to support large-scale data.
+#### Main contributions in this work:
+- A novel frequency-based differential privacy model for trajectory anonymization
+  - The global and local mechanisms can be performed individually or composed with different ordering, which can be specified in the parameter file (detailed later).
+- An efficient hierarchical grid index is provided along with the bottom-up-down search strategy to support large-scale data.
 
-### Project structure
+### Project Structure
 
     CMakeLists.txt                                -- the version of cmake might be revised accordingly (currently is 3.15)
     cmake-build/                                  -- If needed, clean some files, then re-compile and re-build in your device
@@ -28,7 +29,7 @@ An efficient hierarchical grid index is provided along with the bottom-up-down s
 
 ### Anonymization
 
-To compile this project using cmake and c plus plus compiler, run this script:
+To compile this project using cmake and c++ compiler, run this script:
 
     ./buildCPP.sh
 
@@ -61,6 +62,19 @@ Tested with CentOS Linux (with gcc version 9.2.0) and macOS Monterey (Apple clan
     edit_local  = true                                                  -- pureLocal
     global_local_composition_order = GLLG                               -- GL: Global->Local;   LG: Local->Global; exchangable composition
 
-If you encounter any issue during executing this program, please feel free to contact fengmei.jin@uq.edu.au .
+### Citation
+If you find our algorithms or the experimental results useful, please kindly cite the following paper:
+```
+@INPROCEEDINGS{jin2022,
+  author={Jin, Fengmei and Hua, Wen and Ruan, Boyu and Zhou, Xiaofang},
+  booktitle={2022 IEEE 38th International Conference on Data Engineering (ICDE)}, 
+  title={Frequency-based Randomization for Guaranteeing Differential Privacy in Spatial Trajectories}, 
+  year={2022},
+  pages={1727-1739},
+  doi={10.1109/ICDE53745.2022.00175}
+}
+```
+
+Please feel free to contact fengmei.jin@uq.edu.au if you encounter any issue when executing this program.
 
 Thank you!
