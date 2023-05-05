@@ -1,4 +1,4 @@
-## Frequency-based Randomization for Guaranteeing Differential Privacy in Spatial Trajectories
+## [Frequency-based Randomization for Guaranteeing Differential Privacy in Spatial Trajectories](https://ieeexplore.ieee.org/document/9835666)
 #### Authors: Fengmei Jin, Wen Hua, Boyu Ruan, and Xiaofang Zhou
 
 #### Main contributions in this work:
@@ -67,7 +67,7 @@ If you find our algorithms or the experimental results useful, please kindly cit
 ```
 @INPROCEEDINGS{jin2022,
   author={Jin, Fengmei and Hua, Wen and Ruan, Boyu and Zhou, Xiaofang},
-  booktitle={2022 IEEE 38th International Conference on Data Engineering (ICDE)}, 
+  booktitle={Proceedings of the 38th IEEE International Conference on Data Engineering (ICDE)}, 
   title={Frequency-based Randomization for Guaranteeing Differential Privacy in Spatial Trajectories}, 
   year={2022},
   pages={1727-1739},
